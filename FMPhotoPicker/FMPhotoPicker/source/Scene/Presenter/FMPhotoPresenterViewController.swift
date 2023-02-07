@@ -9,7 +9,13 @@
 import UIKit
 import AVKit
 
-class FMPhotoPresenterViewController: UIViewController {
+class FMPhotoPresenterViewController: UIViewController, PhotoEditorDelegate {
+    func doneEditing(image: UIImage) {
+    }
+    
+    func canceledEditing() {
+    }
+    
     // MARK: Outlet
     private weak var photoTitle: UILabel!
     private weak var selectedContainer: UIView!
@@ -116,16 +122,15 @@ class FMPhotoPresenterViewController: UIViewController {
                 let originalThumb = photo.filterdThumb,
                 let filteredImage = vc.getFilteredImage()
                 else { return }
-            let editorVC = FMImageEditorViewController(config: self.config,
-                                                       fmPhotoAsset: photo,
-                                                       filteredImage: filteredImage,
-                                                       originalThumb: originalThumb)
-            editorVC.didEndEditting = { [unowned self] viewDidUpdate in
-                if let photoVC = self.pageViewController.viewControllers?.first as? FMPhotoViewController {
-                    photoVC.reloadPhoto(complete: viewDidUpdate)
-                }
-            }
-            self.present(editorVC, animated: false, completion: nil)
+            let photoEditor = PhotoEditorViewController(nibName: "PhotoEditorViewController", bundle: Bundle(for: PhotoEditorViewController.self))
+            photoEditor.photoEditorDelegate = self
+            photoEditor.modalPresentationStyle = .fullScreen
+            photoEditor.image = photo.filterdThumb
+          //  photoEditor.doneE
+          
+            //To hide controls - array of enum control
+            photoEditor.hiddenControls = [.sticker]
+            present(photoEditor, animated: true, completion: nil)
         }
         
         self.pageViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]

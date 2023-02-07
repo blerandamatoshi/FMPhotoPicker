@@ -25,7 +25,8 @@ public class FMImageEditorViewController: UIViewController {
     
     private weak var filterMenuButton: UIButton!
     private weak var cropMenuButton: UIButton!
-    
+    private weak var editButton: UIButton!
+
     private weak var headerViewTopConstraint: NSLayoutConstraint!
     private weak var bottomViewContainerBottomConstraint: NSLayoutConstraint!
     
