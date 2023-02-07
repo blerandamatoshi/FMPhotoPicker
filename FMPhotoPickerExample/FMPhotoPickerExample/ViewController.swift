@@ -9,7 +9,15 @@
 import UIKit
 import FMPhotoPicker
 
-class ViewController: UIViewController, FMPhotoPickerViewControllerDelegate, FMImageEditorViewControllerDelegate {
+class ViewController: UIViewController, FMPhotoPickerViewControllerDelegate, FMImageEditorViewControllerDelegate, PhotoEditorDelegate {
+    func doneEditing(image: UIImage) {
+        
+    }
+    
+    func canceledEditing() {
+        
+    }
+    
     func fmImageEditorViewController(_ editor: FMImageEditorViewController, didFinishEdittingPhotoWith photo: UIImage) {
         self.dismiss(animated: true, completion: nil)
         previewImageView.image = photo
@@ -113,10 +121,18 @@ class ViewController: UIViewController, FMPhotoPickerViewControllerDelegate, FMI
     }
     
     @IBAction func openEditor(_ sender: Any) {
-        let vc = FMImageEditorViewController(config: config(), sourceImage: previewImageView.image!)
-        vc.delegate = self
-        
-        self.present(vc, animated: true)
+        let photoEditor = PhotoEditorViewController(nibName: "PhotoEditorViewController", bundle: Bundle(for: PhotoEditorViewController.self))
+        photoEditor.photoEditorDelegate = self
+        photoEditor.modalPresentationStyle = .fullScreen
+        photoEditor.image = previewImageView.image
+
+        //To hide controls - array of enum control
+        photoEditor.hiddenControls = [.sticker]
+        present(photoEditor, animated: true, completion: nil)
+//        let vc = FMImageEditorViewController(config: config(), sourceImage: previewImageView.image!)
+//        vc.delegate = self
+//
+//        self.present(vc, animated: true)
     }
 }
 
