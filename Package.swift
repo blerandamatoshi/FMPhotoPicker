@@ -13,6 +13,9 @@ let package = Package(
             name: "FMPhotoPicker",
             targets: ["FMPhotoPicker"])
     ],
+    dependencies: [
+       .package(name: "iOSPhotoEditor", path: "../iOSPhotoEditor"),
+    ],
     targets: [
         .target(
             name: "FMPhotoPicker",
