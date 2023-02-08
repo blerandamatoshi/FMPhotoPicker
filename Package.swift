@@ -19,6 +19,9 @@ let package = Package(
     targets: [
         .target(
             name: "FMPhotoPicker",
+            dependencies: [
+                .product(name: "iOSPhotoEditor", package: "../iOSPhotoEditor"),
+            ],
             path: "FMPhotoPicker/FMPhotoPicker",
             exclude: ["./Info.plist"],
             resources: [
